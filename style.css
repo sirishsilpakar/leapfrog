@@ -1,0 +1,35 @@
+body {
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    background-color: #F9F9F9;
+}
+
+#main-table-wrapper {
+    padding: 1rem;
+}
+
+table, td, th {
+    border: 2px solid black;
+    border-collapse: collapse;
+}
+
+th, td {
+    font-weight: normal;
+    text-align: left;
+    padding: 1em;
+}
+
+th {
+    background-color: #707070;
+    color: white;
+}
+
+tr:nth-child(even) {
+    background-color: #C9C9C9;
+}
+
+td > a:hover {
+    text-decoration: none;
+    color: #007A9C;
+}
