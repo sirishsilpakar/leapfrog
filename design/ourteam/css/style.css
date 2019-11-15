@@ -1,0 +1,15 @@
+.cards-container {
+    background-image: url('../images/scale.png');
+    background-position: top;
+    background-repeat: repeat-x;
+    background-color: #ececec;
+}
+
+.card-title {
+    text-align: center;
+    font-size: 1.5em;
+}
+
+.card-btn {
+    background-color: #e9645b;
+}

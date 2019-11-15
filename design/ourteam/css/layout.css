@@ -1,0 +1,36 @@
+.card-title {
+    padding-top: 53px;
+    padding-bottom: 80px;
+    max-width: 1170px;
+    margin: auto;
+}
+
+.card-element-container {
+    max-width: 1170px;
+    margin: auto;
+    display: block;
+}
+
+.card-element {
+    position : relative;
+    height: 314px;
+    width: 270px;
+    border: 1px solid green;
+}
+
+.card-element > .fg-card {
+    position: absolute;
+    border: 2px solid red;
+    background-image: url('../images/image.png');
+    z-index: 2;
+}
+
+.card-element > .bg-card {
+    position: absolute;
+    display: none;
+    z-index: 1;
+}
+
+.card-btn {
+    display: block;
+}
