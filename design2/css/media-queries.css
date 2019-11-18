@@ -1,0 +1,47 @@
+
+@media screen and (max-width: 800px) {
+.container {
+    max-width: 48em;
+    padding: 0 0.25em;
+}
+
+.nav ul li {
+    margin-top: 0;
+    margin-bottom: 1.8em;
+}
+
+.col2-left .col2-main {
+    width: 100%;
+}
+
+.col2-left .col2-r-row1 {
+    display: none;
+}
+
+.col2-left .col2-r-row2 {
+    width: 90%;
+    margin-bottom: 2%;
+}
+
+}
+
+
+@media screen and (max-width: 400px) {
+
+.container {
+    max-width: 22.5em;
+}
+
+.header .burger-menu {
+    display: block;
+}
+
+.header .navigation {
+    display: none;
+}
+
+.col2-left .col2-r-row2 {
+    display: none;
+}
+
+}

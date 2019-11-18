@@ -1,0 +1,57 @@
+.container {
+    max-width: 73.125%;
+    margin: 0 auto;
+}
+
+.clearfix:before,
+.clearfix:after {
+    content: "";
+    display: block;
+    clear: both;
+    float: none;
+}
+
+.header .logo{
+    float: left;
+}
+.header .burger-menu {
+    float: right;
+}
+
+.header .navigation ul {
+    float: right;
+}
+.header .navigation li{
+    float: left;
+}
+
+.page-title .title {
+    float: left;
+}
+
+.page-title .page-links {
+    float: right;
+}
+
+.page-title .page-links li {
+    float: left;
+}
+
+/*  */
+/*  */
+
+.main-content .project-slideshow-container .project-slider .left-arrow {
+    float: left;
+}
+
+.main-content .project-slideshow-container .project-slider .right-arrow {
+    float: right;
+}
+
+.col2-left .col2-main {
+    float: left;
+}
+.col2-left .col2-r-row1, .col2-left .col2-r-row2 {
+    float: right;
+}
+
