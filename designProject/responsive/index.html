@@ -1,15 +1,575 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Digital Market</title>
-        <!-- Stylesheets used -->
-        <link rel="stylesheet" type="text/css" href="reset.css">
-        <link rel="stylesheet" type="text/css" href="layout.css">
-        <link rel="stylesheet" type="text/css" href="style.css">
-    </head>
-</html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Digital Market</title>
+    <link href="https://fonts.googleapis.com/css?family=Roboto&display=swap" rel="stylesheet">
+    <!-- Stylesheets used -->
+    <link rel="stylesheet" type="text/css" href="css/reset.css">
+    <link rel="stylesheet" type="text/css" href="css/layout.css">
+    <link rel="stylesheet" type="text/css" href="css/style.css">
+</head>
+<body>
+<header>
+    <div class="overlay">
+        <div class="container">
+            <div class="header-top-container">
+                <div class="company-title">
+                    <a href="#">
+                        <figure class="company-logo">
+                           <img src="images/company-logo.png" alt="company-logo"> 
+                        </figure>
+                        <span class="company-name">Digital Market</span>
+                    </a>
+                </div>
+                <nav class="header-nav">
+                    <div class="site-nav">
+                        <ul>
+                            <li class="nav-dropdown"><a href="#">Home</a>
+                                <!-- <ul>
+                                    <li>Home1</li>
+                                    <li>Home2</li>
+                                </ul> -->
+                            </li>
+                            <li><a href="#">All Items</a></li>
+                            <li><a href="#">Freebies</a></li>
+                            <li><a href="#">Premium</a></li>
+                            <li><a href="#">Blog</a></li>
+                        </ul>
+                    </div>
+                    <div class="user-nav">
+                        <ul>
+                            <li><a href="#"><figure><img src="images/search-icon-t.png" alt="search-icon"></figure></a></li>
+                            <li><a href="#"><figure><img src="images/cart-icon.png" alt="cart-icon"></figure><span class="cartNumberCircle">1</span></a></li>
+                            <li>
+                                <a class="button login-btn" href="#">Login</a>
+                            </li>
+                        </ul>
+                    </div>
+                </nav>
+            </div>
+            <div class="header-banner">
+                <div class="header-banner-text">
+                    <span class="banner-title">Most Selective Market of Digital Products for Creatives.</span>
+                    <span class="banner-description">Curated Design Resources to Enter Energize Your Creative Workflow.</span>
+                </div>
+                <ul class="header-banner-btn">
+                    <li><a class="button" href="#">View all Products</a></li>
+                    <li><a class="button" href="#">See our Pricing</a></li>
+                </ul>
+            </div>
+            <div class="header-search">
+                <form action="#">
+                    <select name="filter">
+                        <option value="entire-site">Entire Site</option>
+                        <option value="arts">Arts</option>
+                        <option value="entertainment">Entertainment</option>
+                    </select><input type="text" placeholder="Search your keyword..." name="search-query"/><input type="submit" value="Search"/>
+                </form>
+            </div>
+        </div>
+    </div>
+</header>
+<div class="main-content">
+    <div class="container">
+        <div class="filter-content">
+            <span>Filter By</span>
+            <ul>
+                <li><a class="button" href="#">All</a></li>
+                <li><a class="button" href="#">Art Direction</a></li>
+                <li><a class="button" href="#">Graphic Design</a></li>
+                <li><a class="button" href="#">Identity Design</a></li>
+                <li><a class="button" href="#">Mockup</a></li>
+                <li><a class="button" href="#">Typography</a></li>
+            </ul>
+        </div>
+        <div class="content-container clearfix">
+            <div class="content-card">
+                <div class="content-image">
+                    <div class="content-interaction-detail">
+                        <figure><img src="images/content-download-icon.png" alt="product-download-number"></figure>
+                        <span>3,049</span>
+                        <figure><img src="images/content-favorite-icon.png" alt="product-favorite-number"></figure>
+                        <span>49</span>
+                    </div>
+                    <div class="content-interaction">
+                        <a  class="button" href="#"><figure><img src="images/content-hover-eye-icon.png" alt="view-product"></figure></a>
+                        <a  class="button" href="#"><figure><img src="images/content-hover-cart-icon.png" alt="add-to-cart"></figure></a>
+                    </div>
+                    <div class="more-images-btn">
+                        <a class="left-arrow" href="#"><figure><img src="images/left-arrow-img.png" alt="left-arrow"></figure></a>
+                        <a class="right-arrow" href="#"><figure><img src="images/right-arrow-img.png" alt="right-arrow"></figure></a>
+                    </div>
+                    <figure>
+                        <img src="images/content-image01.png" alt="content-image1">
+                    </figure>
+                </div>
+                <div class="content-description clearfix">
+                    <div class="content-detail">
+                        <a class="content-title" href="#">Collector iOS Wireframe detail</a>
+                        <p class="content-summary">Lorem ipsum dolor sit amet consectetur adipisicing elit. Nihil assumenda placeat quo natus atque aliquid corporis provident sint blanditiis eius!</p>
+                    </div>
+                    <div class="content-end-detail">
+                        <div class="content-author">
+                            <figure><img src="images/content-author-image.png" alt="content-author"></figure>
+                            <span>by Sipara Mananandhar</span>
+                        </div>
+                        <div class="content-price">
+                            <span class="currency">$</span>
+                            <span class="price">60.00</span>
+                            <span class="free-price">Free</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="content-card">
+                    <div class="content-image more-images">
+                        <div class="content-interaction-detail">
+                            <figure><img src="images/content-download-icon.png" alt="product-download-number"></figure>
+                            <span>3,049</span>
+                            <figure><img src="images/content-favorite-icon.png" alt="product-favorite-number"></figure>
+                            <span>49</span>
+                        </div>
+                        <div class="content-interaction">
+                            <a  class="button" href="#"><figure><img src="images/content-hover-eye-icon.png" alt="view-product"></figure></a>
+                            <a  class="button" href="#"><figure><img src="images/content-hover-cart-icon.png" alt="add-to-cart"></figure></a>
+                        </div>
+                        <div class="more-images-btn">
+                            <a class="left-arrow" href="#"><figure><img src="images/left-arrow-img.png" alt="left-arrow"></figure></a>
+                            <a class="right-arrow" href="#"><figure><img src="images/right-arrow-img.png" alt="right-arrow"></figure></a>
+                        </div>
+                        <figure>
+                            <img src="images/content-image01.png" alt="content-image1">
+                        </figure>
+                    </div>
+                    <div class="content-description clearfix">
+                        <div class="content-detail">
+                            <a class="content-title" href="#">Collector iOS Wireframe detail</a>
+                            <p class="content-summary">Lorem ipsum dolor sit amet consectetur adipisicing elit. Nihil assumenda placeat quo natus atque aliquid corporis provident sint blanditiis eius!</p>
+                        </div>
+                        <div class="content-end-detail">
+                            <div class="content-author">
+                                <figure><img src="images/content-author-image.png" alt="content-author"></figure>
+                                <span>by Sipara Mananandhar</span>
+                            </div>
+                            <div class="content-price">
+                                <span class="currency">$</span>
+                                <span class="price">60.00</span>
+                                <span class="free-price">Free</span>
+                            </div>
+                        </div>
+                    </div>
+            </div>
+            <div class="content-card">
+                <div class="content-image">
+                    <div class="content-interaction-detail">
+                        <figure><img src="images/content-download-icon.png" alt="product-download-number"></figure>
+                        <span>3,049</span>
+                        <figure><img src="images/content-favorite-icon.png" alt="product-favorite-number"></figure>
+                        <span>49</span>
+                    </div>
+                    <div class="content-interaction">
+                        <a  class="button" href="#"><figure><img src="images/content-hover-eye-icon.png" alt="view-product"></figure></a>
+                        <a  class="button" href="#"><figure><img src="images/content-hover-cart-icon.png" alt="add-to-cart"></figure></a>
+                    </div>
+                    <div class="more-images-btn">
+                        <a class="left-arrow" href="#"><figure><img src="images/left-arrow-img.png" alt="left-arrow"></figure></a>
+                        <a class="right-arrow" href="#"><figure><img src="images/right-arrow-img.png" alt="right-arrow"></figure></a>
+                    </div>
+                    <figure>
+                        <img src="images/content-image01.png" alt="content-image1">
+                    </figure>
+                </div>
+                <div class="content-description clearfix">
+                    <div class="content-detail">
+                        <a class="content-title" href="#">Collector iOS Wireframe detail</a>
+                        <p class="content-summary">Lorem ipsum dolor sit amet consectetur adipisicing elit. Nihil assumenda placeat quo natus atque aliquid corporis provident sint blanditiis eius!</p>
+                    </div>
+                    <div class="content-end-detail">
+                        <div class="content-author">
+                            <figure><img src="images/content-author-image.png" alt="content-author"></figure>
+                            <span>by Sipara Mananandhar</span>
+                        </div>
+                        <div class="content-price free">
+                            <span class="currency">$</span>
+                            <span class="price">60.00</span>
+                            <span class="free-price">Free</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="content-card">
+                <div class="content-image">
+                    <div class="content-interaction-detail">
+                        <figure><img src="images/content-download-icon.png" alt="product-download-number"></figure>
+                        <span>3,049</span>
+                        <figure><img src="images/content-favorite-icon.png" alt="product-favorite-number"></figure>
+                        <span>49</span>
+                    </div>
+                    <div class="content-interaction">
+                        <a  class="button" href="#"><figure><img src="images/content-hover-eye-icon.png" alt="view-product"></figure></a>
+                        <a  class="button" href="#"><figure><img src="images/content-hover-cart-icon.png" alt="add-to-cart"></figure></a>
+                    </div>
+                    <div class="more-images-btn">
+                        <a class="left-arrow" href="#"><figure><img src="images/left-arrow-img.png" alt="left-arrow"></figure></a>
+                        <a class="right-arrow" href="#"><figure><img src="images/right-arrow-img.png" alt="right-arrow"></figure></a>
+                    </div>
+                    <figure>
+                        <img src="images/content-image01.png" alt="content-image1">
+                    </figure>
+                </div>
+                <div class="content-description clearfix">
+                    <div class="content-detail">
+                        <a class="content-title" href="#">Collector iOS Wireframe detail</a>
+                        <p class="content-summary">Lorem ipsum dolor sit amet consectetur adipisicing elit. Nihil assumenda placeat quo natus atque aliquid corporis provident sint blanditiis eius!</p>
+                    </div>
+                    <div class="content-end-detail">
+                        <div class="content-author">
+                            <figure><img src="images/content-author-image.png" alt="content-author"></figure>
+                            <span>by Sipara Mananandhar</span>
+                        </div>
+                        <div class="content-price">
+                            <span class="currency">$</span>
+                            <span class="price">60.00</span>
+                            <span class="free-price">Free</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="content-card">
+                <div class="content-image">
+                    <div class="content-interaction-detail">
+                        <figure><img src="images/content-download-icon.png" alt="product-download-number"></figure>
+                        <span>3,049</span>
+                        <figure><img src="images/content-favorite-icon.png" alt="product-favorite-number"></figure>
+                        <span>49</span>
+                    </div>
+                    <div class="content-interaction">
+                        <a  class="button" href="#"><figure><img src="images/content-hover-eye-icon.png" alt="view-product"></figure></a>
+                        <a  class="button" href="#"><figure><img src="images/content-hover-cart-icon.png" alt="add-to-cart"></figure></a>
+                    </div>
+                    <div class="more-images-btn">
+                        <a class="left-arrow" href="#"><figure><img src="images/left-arrow-img.png" alt="left-arrow"></figure></a>
+                        <a class="right-arrow" href="#"><figure><img src="images/right-arrow-img.png" alt="right-arrow"></figure></a>
+                    </div>
+                    <figure>
+                        <img src="images/content-image01.png" alt="content-image1">
+                    </figure>
+                </div>
+                <div class="content-description clearfix">
+                    <div class="content-detail">
+                        <a class="content-title" href="#">Collector iOS Wireframe detail</a>
+                        <p class="content-summary">Lorem ipsum dolor sit amet consectetur adipisicing elit. Nihil assumenda placeat quo natus atque aliquid corporis provident sint blanditiis eius!</p>
+                    </div>
+                    <div class="content-end-detail">
+                        <div class="content-author">
+                            <figure><img src="images/content-author-image.png" alt="content-author"></figure>
+                            <span>by Sipara Mananandhar</span>
+                        </div>
+                        <div class="content-price">
+                            <span class="currency">$</span>
+                            <span class="price">60.00</span>
+                            <span class="free-price">Free</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="content-card">
+                <div class="content-image">
+                    <div class="content-interaction-detail">
+                        <figure><img src="images/content-download-icon.png" alt="product-download-number"></figure>
+                        <span>3,049</span>
+                        <figure><img src="images/content-favorite-icon.png" alt="product-favorite-number"></figure>
+                        <span>49</span>
+                    </div>
+                    <div class="content-interaction">
+                        <a  class="button" href="#"><figure><img src="images/content-hover-eye-icon.png" alt="view-product"></figure></a>
+                        <a  class="button" href="#"><figure><img src="images/content-hover-cart-icon.png" alt="add-to-cart"></figure></a>
+                    </div>
+                    <div class="more-images-btn">
+                        <a class="left-arrow" href="#"><figure><img src="images/left-arrow-img.png" alt="left-arrow"></figure></a>
+                        <a class="right-arrow" href="#"><figure><img src="images/right-arrow-img.png" alt="right-arrow"></figure></a>
+                    </div>
+                    <figure>
+                        <img src="images/content-image01.png" alt="content-image1">
+                    </figure>
+                </div>
+                <div class="content-description clearfix">
+                    <div class="content-detail">
+                        <a class="content-title" href="#">Collector iOS Wireframe detail</a>
+                        <p class="content-summary">Lorem ipsum dolor sit amet consectetur adipisicing elit. Nihil assumenda placeat quo natus atque aliquid corporis provident sint blanditiis eius!</p>
+                    </div>
+                    <div class="content-end-detail">
+                        <div class="content-author">
+                            <figure><img src="images/content-author-image.png" alt="content-author"></figure>
+                            <span>by Sipara Mananandhar</span>
+                        </div>
+                        <div class="content-price">
+                            <span class="currency">$</span>
+                            <span class="price">60.00</span>
+                            <span class="free-price">Free</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <span class="stretch"></span>
+            <div class="more-content">
+                <ul>
+                    <li><figure class="dot-big"><img src="images/loading-dot-big.png" alt="loading"></figure></li>
+                    <li><figure class="dot-medium"><img src="images/loading-dot-medium.png" alt="loading"></figure></li>
+                    <li><figure class="dot-small"><img src="images/loading-dot-small.png" alt="loading"></figure></li>
+                </ul>
+            </div>
+        </div>
+        <div class="pricing-plans-container">
+            <div class="pricing-plans-title">
+                <h3>Our Pricing Plans</h3>
+                <p>Select the pack that you would like best</p>
+            </div>
+            <div class="plans-container">
+                <div class="plan-card">
+                    <div class="container-plan-card">
+                        <div class="plan-title">
+                            <h4>Single</h4>
+                            <p>For individual creatives.</p>
+                        </div>
+                        <div class="plan-price">
+                            <span class="currency-symbol">$</span>
+                            <span class="currency-amount">89</span>
+                            <span class="time-frame">/month</span>
+                        </div>
+                        <div class="plan-features">
+                            <ul>
+                                <li>1 License</li>
+                                <li>Instagram Module</li>
+                                <li>Gallery Module</li>
+                                <li>MailChimp Module</li>
+                                <li>1 License</li>
+                                <li>Content Editor</li>
+                                <li>Fully Responsive</li>
+                            </ul>
+                        </div>
+                        <div class="plan-purchase">
+                            <a class="button" href="#">Purchase</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="plan-card recommended-card">
+                    <div class="container-plan-card">
+                        <div class="plan-title">
+                            <h4>Studio</h4>
+                            <p>Great for small studios and agencies.</p>
+                        </div>
+                        <div class="plan-price">
+                            <span class="currency-symbol">$</span>
+                            <span class="currency-amount">128</span>
+                            <span class="time-frame">/month</span>
+                        </div>
+                        <div class="plan-features">
+                            <ul>
+                                <li>Design with Blocks</li>
+                                <li>Instagram Module</li>
+                                <li>Gallery Module</li>
+                                <li>MailChimp Module</li>
+                                <li>1 License</li>
+                                <li>Content Editor</li>
+                                <li>& more</li>
+                            </ul>
+                        </div>
+                        <div class="plan-purchase">
+                            <a class="button" href="#">Purchase</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="plan-card">
+                    <div class="container-plan-card">
+                        <div class="plan-title">
+                            <h4>Business</h4>
+                            <p>Great for small studios and agencies.</p>
+                        </div>
+                        <div class="plan-price">
+                            <span class="currency-symbol">$</span>
+                            <span class="currency-amount">599</span>
+                            <span class="time-frame">/month</span>
+                        </div>
+                        <div class="plan-features">
+                            <ul>
+                                <li>Design with Blocks</li>
+                                <li>Content Editor</li>
+                                <li>Fully Responsive</li>
+                                <li>Custom Fontsets</li>
+                                <li>Video Support</li>
+                                <li>Fullscreen Cover</li>
+                                <li>& more</li>
+                            </ul>
+                        </div>
+                        <div class="plan-purchase">
+                            <a class="button" href="#">Purchase</a>
+                        </div>
+                    </div>
+                </div>
+                <span class="stretch"></span>
+            </div>
+        </div>
+    </div>
+    <div class="mailing-list-section">
+        <div class="container">
+            <div class="mailing-list-container">
+                <div class="mailing-list">
+                    <span class="title">Join Us For Free</span>
+                    <span class="title-detail">Subscribe to our free mailing list for freebies and more!</span>
+                    <form action="#" method="POST">
+                        <input type="text" placeholder="Enter your email..." name="mailing-email"><input class="button" type="submit" value="Sign Up">
+                    </form>
+                    <span class="footer-info">We guarantee not to spam or share your information</span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="testimonials">
+        <div class="container">
+            <div class="testimonial-title">
+                <span class="title">Testimonials</span >
+                <span class="title-detail">Our customers have something to say about us.</span>
+            </div>
+            <div class="testimonial-quotes-container clearfix">
+                <div class="testimonial-quotes">
+                    <div class="quote-box"><p class="quote">When one door of happiness closes, another opens, but often we look so long at the closed door that we do not see the one that has been opened for us.</p></div>
+                    <div class="quote-person">
+                        <figure>
+                            <img src="images/quote-author.png" alt="quote-author">
+                        </figure>
+                        <div class="quote-person-details">
+                            <span class="quote-author title">Hellen Keller</span>
+                            <span class="quote-author-post title-detail">Senior UX/UI Designmer</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="testimonial-quotes">
+                    <div class="quote-box"><p class="quote">When one door of happiness closes, another opens, but often we look so long at the closed door that we do not see the one that has been opened for us.</p></div>
+                    <div class="quote-person">
+                        <figure>
+                            <img src="images/quote-author.png" alt="quote-author">
+                        </figure>
+                        <div class="quote-person-details">
+                            <span class="quote-author title">Hellen Keller</span>
+                            <span class="quote-author-post title-detail">Senior UX/UI Designmer</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="testimonial-quotes">
+                    <div class="quote-box"><p class="quote">When one door of happiness closes, another opens, but often we look so long at the closed door that we do not see the one that has been opened for us.</p></div>
+                    <div class="quote-person">
+                        <figure>
+                            <img src="images/quote-author.png" alt="quote-author">
+                        </figure>
+                        <div class="quote-person-details">
+                            <span class="quote-author title">Hellen Keller</span>
+                            <span class="quote-author-post title-detail">Senior UX/UI Designmer</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="testimonial-quotes">
+                    <div class="quote-box"><p class="quote">When one door of happiness closes, another opens, but often we look so long at the closed door that we do not see the one that has been opened for us.</p></div>
+                    <div class="quote-person">
+                        <figure>
+                            <img src="images/quote-author.png" alt="quote-author">
+                        </figure>
+                        <div class="quote-person-details">
+                            <span class="quote-author title">Hellen Keller</span>
+                            <span class="quote-author-post title-detail">Senior UX/UI Designmer</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
 
+        </div>
+    </div>
+    <div class="download-section">
+        <div class="container">
+            <div class="download-container">
+                <div class="download-title">
+                    <span class="title">Learn How to Create Your Own Mockups!</span>
+                    <span class="title-detail">Download our free ebook and start making your own mockups in a few simple steps.</span>
+                </div>
+                <div class="download-link">
+                    <a class="button" href="#">Get your free Ebook now!</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<footer>
+    <div class="container">
+        <div class="footer-large clearfix">
+            <div class="col2-l">
+                <div class="col-left footer-info">
+                    <span class="title">Digital</span>
+                    <span class="title-detail"> We're Passionate about creating free and preium resourcesfor proessional community.</span>
+                    <span class="info">Any questions? Email to info@digital.net</span>
+                </div>
+                <div class="col-right footer-links">
+                    <span class="title">Quick Links</span>
+                    <div class="quick-links">
+                        <ul>
+                            <li><a href="#">Home</a></li>
+                            <li><a href="#">About Us</a></li>
+                            <li><a href="#">Blog</a></li>
+                            <li><a href="#">Services</a></li>
+                            <li><a href="#">Contact</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="col2-l">
+                <div class="col-left posts">
+                    <span class="title">Recent Posts</span>
+                    <div class="footer-posts">
+                        <ul>
+                            <li>
+                                <a href="#">
+                                    <ul>
+                                        <li class="post-name">Tutorial: Isometric Actions and Icons in Illustrator</li>
+                                        <li class="post-date">12 Jan 2018</li>
+                                    </ul>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#">
+                                    <ul>
+                                        <li class="post-name">Tutorial: Isometric Actions and Icons in Illustrator</li>
+                                        <li class="post-date">12 Jan 2017</li>
+                                    </ul>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-right signup">
+                    <span class="title">Subscribe to our Newsletter</span>
+                    <span class="title-detail">Sign up for our newsletter to receive the new releases direct to your inbox.</span>
+                    <div class="signup-box">
+                        <form action="#">
+                            <input type="email" name="signup-email" placeholder="Your email address"><input type="submit" value="Sign Up">
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="footer-small clearfix">
+            <span class="copyright">&copy; Copyright 2018, Digital Market. All Rights Reserved. Designed by Niraj Thapa.</span>
+            <div class="social-links">
+                <ul>
+                    <li><a href="#"><figure><img src="images/fb.png" alt="facebook-link"></figure></a></li>
+                    <li><a href="#"><figure><img src="images/twitter.png" alt="twitter-link"></figure></a></li>
+                    <li><a href="#"><figure><img src="images/gmail.png" alt="google-link"></figure></a></li>
+                    <li><a href="#"><figure><img src="images/pintrest.png" alt="pinterest-link"></figure></a></li>
+                    <li><a href="#"><figure><img src="images/instagram.png" alt="instagram-link"></figure></a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</footer>
 </body>
 </html>

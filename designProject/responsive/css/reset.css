@@ -1,4 +1,15 @@
 * {
     padding: 0px;
     margin: 0px;
+    /* outline: 1px dotted red */
+    font-family: 'Roboto', sans-serif;
+}
+li {
+    list-style: none;
+}
+a {
+    text-decoration: none;
+}
+figure {
+    display: inline;
 }
