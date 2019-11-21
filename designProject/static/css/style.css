@@ -200,8 +200,8 @@ header .header-search input[type=submit]:hover{
 .main-content .content-container{
     width: 100%;
     text-align: justify;
-    -ms-text-justify: distribute-all-lines;
-    text-justify: distribute-all-lines;
+    /* -ms-text-justify: distribute-all-lines;
+    text-justify: distribute-all-lines; */
 }
 .main-content .content-container .content-card{
     width: 31.6239%;
@@ -376,8 +376,8 @@ header .header-search input[type=submit]:hover{
 .pricing-plans-container .plans-container {
     width: 100%;
     text-align: justify;
-    -ms-text-justify: distribute-all-lines;
-    text-justify: distribute-all-lines;
+    /* -ms-text-justify: distribute-all-lines;
+    text-justify: distribute-all-lines; */
 }
 .pricing-plans-container .plans-container .plan-card {
     width: 29%;
@@ -530,7 +530,7 @@ header .header-search input[type=submit]:hover{
     color:#454545;
     font-size: 18px;
     text-align: justify;
-    text-justify: distribute;
+    /* text-justify: distribute; */
 }
 .testimonials .testimonial-quotes-container .testimonial-quotes .quote-person {
    text-align: left;
