@@ -1,0 +1,59 @@
+* {
+  padding: 0px;
+  margin: 0px;
+}
+
+#carousel-container {
+  width: 800px;
+  height: 400px;
+  margin: 0 auto;
+  overflow: hidden;
+  position: relative;
+}
+
+#carousel-image-wrapper {
+  height: 400px; 
+  width: 3600px;
+  position: absolute;
+}
+
+.left-btn, .right-btn {
+  cursor: pointer;
+  position: absolute;
+  top: 40%;
+  padding: 0 16px;
+  color: white;
+  font-weight: bold;
+  font-size: 30px;
+}
+
+.left-btn:hover, .right-btn:hover{
+  color: lightblue;
+  text-decoration: none;
+}
+.right-btn {
+  right: 0;
+
+}
+.image-dot {
+  text-align: center;
+  position: absolute;
+  bottom: 10%;
+  margin-left:auto;
+  margin-right:auto;
+  left:0;
+  right:0;
+}
+
+.dot {
+  cursor: pointer;
+  height: 15px;
+  width: 15px;
+  margin: 0 2px;
+  background-color: white;
+  border-radius: 50%;
+  display: inline-block;
+}
+.active, .dot:hover {
+  background-color: black;
+}

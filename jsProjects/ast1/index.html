@@ -1,0 +1,25 @@
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Image Slider</title>
+  <link rel="stylesheet" href="./style.css">
+</head>
+<body>
+  <div id="carousel-container" id="container">
+    <div id="carousel-image-wrapper" id="image-wrapper">
+      <img src="images/nature.jpg" alt="image1"/><img src="images/city.jpg" alt="image2"/><img src="images/abstract.jpg" alt="image3"/><img src="images/sports.jpg" alt="image4"/>
+    </div>
+    <span class="left-btn" onclick="previousSlide();">&#10094;</span>
+    <span class="right-btn" onclick="nextSlide();">&#10095;</span>
+    <div class="image-dot">
+        <span class="dot active" onclick="showSlideIndex(0)"></span> 
+        <span class="dot" onclick="showSlideIndex(1)"></span> 
+        <span class="dot" onclick="showSlideIndex(2)"></span> 
+        <span class="dot" onclick="showSlideIndex(3)"></span>
+      </div>
+  </div>
+  <script src="./script.js"></script>
+</body>
+</html>
