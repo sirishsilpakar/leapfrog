@@ -1,0 +1,17 @@
+.app {
+  width: 800px;
+  height: 400px;
+  margin: 0 auto;
+  margin-top: 5%;
+  background: #dfdfdf;
+  position: relative;
+}
+
+.box {
+  /* background-image: url('./images/ant.gif'); 
+  background-position:0 0;
+  background-size: contain;
+  background-repeat: no-repeat; */
+  background: green;
+  position: absolute;
+}
