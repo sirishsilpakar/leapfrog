@@ -2,7 +2,7 @@ function getRandomNumber(min, max) {
   return Math.random() * (max - min) + min;
 }
 
-function Car(parentElement) {
+function Object(parentElement) {
   this.x = 0;
   this.y = 0;
   this.dx = 5;
@@ -14,13 +14,13 @@ function Car(parentElement) {
   this.parentElement = parentElement;
   
   this.init = function() {
-    var car = document.createElement('div');
-    car.style.height = this.height + 'px';
-    car.style.width = this.width + 'px';
-    car.style.position = 'absolute';
-    car.classList.add('car');
-    this.parentElement.appendChild(car);
-    this.element = car;
+    var gameElement = document.createElement('div');
+    gameElement.style.height = this.height + 'px';
+    gameElement.style.width = this.width + 'px';
+    gameElement.style.position = 'absolute';
+    gameElement.classList.add('game-element');
+    this.parentElement.appendChild(gameElement);
+    this.element = gameElement;
 
     this.draw();
 
@@ -38,8 +38,26 @@ function Car(parentElement) {
 
   this.enemyCarInit = function() {
     var enemyCarImages = ['aston-martin-one.png', 'black-car.png', 'ford-mustang.png', 'red-top-car.png']
-    this.element.style.backgroundImage = 'url("./images/'+enemyCarImages[parseInt(getRandomNumber(-1,5))] + '")';
+    this.element.style.backgroundImage = 'url("./images/'+enemyCarImages[parseInt(getRandomNumber(-1,enemyCarImages.length-1))] + '")';
     this.element.classList.add('enemy-car');
+    this.element.style.backgroundSize = 'cover';
+    this.element.style.backgroundRepeat = 'no-repeat';
+    this.element.style.backgroundPosition = 'center center';
+    this.element.style.backgroundColor = 'transparent';
+  }
+
+  this.ammoBoxInit = function() {
+    this.element.style.backgroundImage = 'url("./images/ammu-box.png")';
+    this.element.classList.add('ammo-box');
+    this.element.style.backgroundSize = 'cover';
+    this.element.style.backgroundRepeat = 'no-repeat';
+    this.element.style.backgroundPosition = 'center center';
+    this.element.style.backgroundColor = 'transparent';
+  }
+
+  this.ammoInit = function() {
+    this.element.style.backgroundImage = 'url("./images/laser-bullet.png")';
+    this.element.classList.add('ammo');
     this.element.style.backgroundSize = 'cover';
     this.element.style.backgroundRepeat = 'no-repeat';
     this.element.style.backgroundPosition = 'center center';
@@ -106,10 +124,6 @@ function Car(parentElement) {
   this.move = function() {
     this.x += this.dx;
     this.y += this.dy;
-    // if(this.y > parseInt(this.parentElement.style.height)){
-    //   this.y = getRandomNumber(-this.height*1.5,-this.height*5);
-    //   this.lanePosition = parseInt(getRandomNumber(-2,2));
-    // }
     this.draw();
   }
 
@@ -130,19 +144,24 @@ function Car(parentElement) {
 
 function Game(parentElement, maxWidth, maxHeight) {
   var enemyCars = [];
+  var ammoBoxes = [];
+  var ammos = [];
   var containerWidth = maxWidth || 600;
   var containerHeight = maxHeight || 800;
   var roadElement = null;
   var playerCar = null;
+  var ammoElement = null;
+  var playerAmmo = 0;
   var gameSpeed = 0;
   var carSpeed = 0;
   var gameRun;
   var that = this;
   var refreshRate = 30;
-  var highestScore = 0;
+  var highestScore = localStorage.getItem('highestscore') || 0;
   this.gameState = true;
   this.gameScore = 0;
   this.scoreBoardElement = null;
+  this.ammuElement = null;
   this.parentElement = parentElement;
 
   this.init = function() {
@@ -156,7 +175,6 @@ function Game(parentElement, maxWidth, maxHeight) {
     var startMenu = document.createElement('div');
     startMenu.classList.add('start-menu');
     this.parentElement.appendChild(startMenu);
-
 
     var gameTitle = document.createElement('h1');
     gameTitle.classList.add('game-title');
@@ -180,10 +198,9 @@ function Game(parentElement, maxWidth, maxHeight) {
     startMenu.style.lineHeight = '3em';
     startMenu.style.backgroundColor = 'rgba(247, 136, 136, 0.8)';
     
-    
     gameTitle.innerHTML = 'Car Lane Game';
 
-    gameControlInfo.innerHTML = 'Press "Left Arrow / A" and "Right Arrow / D" to move the car';
+    gameControlInfo.innerHTML = '<p>Press "Left Arrow / A" and "Right Arrow / D" to move the car<p><p>Press "Up Arrow / Spacebar to shoot"</p>';
     gameControlInfo.style.display = 'inline-block';
     gameControlInfo.style.color = 'white';
 
@@ -199,16 +216,7 @@ function Game(parentElement, maxWidth, maxHeight) {
     score.style.display = 'block';
     score.style.fontWeight = 'bold';
 
-    
-    // highestScore = localStorage.getItem('highestscore');
-    // score.innerHTML = 'Highest Score:  ' + highestScore;
-
-    // if((localStorage.getItem('highestscore') !== null) && (localStorage.getItem('highestscore') < this.gameScore)){
-    //   localStorage.setItem('highestscore', this.gameScore);
-    // }
-    // else {
-    //   localStorage.setItem('highestscore', highestScore);
-    // }
+    score.innerHTML = 'Highest Score:  ' + highestScore;
 
     playBtn.onclick = function () {
       that.parentElement.removeChild(startMenu);
@@ -228,6 +236,7 @@ function Game(parentElement, maxWidth, maxHeight) {
 
     scoreBoard.style.position = 'absolute';
     scoreBoard.style.width = '100%';
+    scoreBoard.style.lineHeight = '2em';
     scoreBoard.style.backgroundColor = 'rgba(247, 136, 136, 0.8)';
     scoreBoard.style.padding = '10px 0px';
 
@@ -239,6 +248,14 @@ function Game(parentElement, maxWidth, maxHeight) {
     score.innerHTML = 'Your Score: ' + this.gameScore;
 
     this.scoreBoardElement = score;
+
+    var ammunition = document.createElement('span');
+    scoreBoard.appendChild(ammunition);
+    ammunition.style.display = 'block';
+    ammunition.style.color = 'white';
+    ammunition.innerHTML ='Ammo Left: ' + playerAmmo;
+    
+    this.ammuElement = ammunition;
   }
 
   this.setContainerSize = function() {
@@ -264,8 +281,9 @@ function Game(parentElement, maxWidth, maxHeight) {
   }
   
   this.initPlayerCar = function() {
-    var car = new Car(this.parentElement).init();
-    car.setPositionXY(containerWidth/1.75- car.width, containerHeight - car.height*2.5); 
+    var car = new Object(this.parentElement).init();
+    car.setPositionXY(containerWidth / 1.75 - car.width, containerHeight - car.height * 2.5); //formula what to center car no matter what? container width / container height
+                                                                                          /// number of lanes affect it?
     car.setSize(50, 120);
     car.setSpeed(0, 0);
     car.playerCarInit();
@@ -274,16 +292,57 @@ function Game(parentElement, maxWidth, maxHeight) {
   }
 
   this.initEnemyCar = function() {
-    var enemyCar = new Car(parentElement).init();
+    var enemyCar = new Object(parentElement).init();
     enemyCar.lanePosition = parseInt(getRandomNumber(-2,2));
-  
+    // enemyCar.setPositionXY((containerWidth / 1.75 - enemyCar.width) + (enemyCar.lanePosition * (containerWidth / 3)), 
+    //                           getRandomNumber(-playerCar.height * 1.5, -playerCar.height * 6));
     enemyCar.setPositionXY((containerWidth / 1.75 - enemyCar.width) + (enemyCar.lanePosition * (containerWidth / 3)), 
-    getRandomNumber(-containerWidth/5, -containerWidth/2 ));
+                            -enemyCar.height);
     enemyCar.setSize(50, 120);
     enemyCar.enemyCarInit();
     enemyCar.setSpeed(0, carSpeed);
-  
+    // if(enemyCar.checkPosition(enemyCars)) {
+    //   enemyCar.setPositionXY(
+    //     (containerWidth / 1.75 - enemyCar.width) + (enemyCar.lanePosition * (containerWidth / 3)), 
+    //     getRandomNumber(-playerCar.height * 1.5, -playerCar.height * 6))
+    // }
     enemyCars.push(enemyCar);    
+  }
+
+  this.fireAmmo = function() {
+    var ammo = new Object(parentElement).init();
+    ammo.lanePosition = playerCar.lanePosition;
+    ammo.setPositionXY(playerCar.x, playerCar.y + 15);
+    ammo.setSize(50, 50);
+    ammo.ammoInit();this.ammuElement.innerHTML = 'Ammo Left: ' + playerAmmo;
+    ammo.setSpeed(0, -carSpeed*2);
+    // if(enemyCar.checkPosition(enemyCars)) {
+    //   enemyCar.setPositionXY(
+    //     (containerWidth / 1.75 - enemyCar.width) + (enemyCar.lanePosition * (containerWidth / 3)), 
+    //     getRandomNumber(-playerCar.height * 1.5, -playerCar.height * 6))
+    // }
+    ammos.push(ammo);  
+    ammo.move(); 
+    playerAmmo--;
+    this.ammuElement.innerHTML = 'Ammo Left: ' + playerAmmo;
+  }
+
+  this.initAmmoBox = function() {
+    var ammoBox = new Object(parentElement).init();
+    ammoBox.lanePosition = parseInt(getRandomNumber(-2,2));
+    // ammoBox.setPositionXY((containerWidth / 1.75 - ammoBox.width) + (ammoBox.lanePosition * (containerWidth / 3)), 
+    //                           getRandomNumber(-playerCar.height * 1.5, -playerCar.height * 6));
+    ammoBox.setPositionXY((containerWidth / 1.75 - ammoBox.width) + (ammoBox.lanePosition * (containerWidth / 3)), 
+                            ammoBox.height);
+    ammoBox.setSize(50, 50);
+    ammoBox.ammoBoxInit();
+    ammoBox.setSpeed(0, carSpeed);
+    // if(ammoBox.checkPosition(enemyCars)) {
+    //   ammoBox.setPositionXY(
+    //     (containerWidth / 1.75 - ammoBox.width) + (ammoBox.lanePosition * (containerWidth / 3)), 
+    //     getRandomNumber(-playerCar.height * 1.5, -playerCar.height * 6))
+    // }
+    ammoBoxes.push(ammoBox);    
   }
 
   this.leftKeyPressed = function() {
@@ -302,16 +361,26 @@ function Game(parentElement, maxWidth, maxHeight) {
     }
   }
 
+  this.upKeyPressed = function() {
+    if(playerAmmo > 0) {
+      this.fireAmmo();
+    }
+  }
   this.keyPressed = function(e) {
+    console.log(e.key);
+
     switch(e.key) {
       case 'a':
       case 'ArrowLeft':
         that.leftKeyPressed();
         break;
       case 'd':
-      case "ArrowRight":
+      case 'ArrowRight':
         that.rightKeyPressed();
         break;
+      case 'ArrowUp':
+      case ' ':
+        that.upKeyPressed();
     }
   }
 
@@ -323,18 +392,7 @@ function Game(parentElement, maxWidth, maxHeight) {
     document.removeEventListener('keydown', this.keyPressed);
   }
 
-  this.moveCars = function() {
-    gameSpeed += 10; 
-    roadElement.style.backgroundPositionY = (gameSpeed % (containerHeight)) + 'px';
-    
-    if(gameSpeed % 4000 === 0) {
-      carSpeed = 0;
-    }
-    else if(gameSpeed % containerHeight/5 === 0) {
-      this.initEnemyCar();
-    }
-    carSpeed+=0.05;
-
+  this.checkCollisionWithEnemyCar = function() {
     for(var i = 0; i < enemyCars.length; i++) {
       if(playerCar.checkCollisionWithCar(enemyCars[i])){
         this.gameOver();
@@ -343,12 +401,72 @@ function Game(parentElement, maxWidth, maxHeight) {
       enemyCars[i].setSpeed(0, carSpeed);
       enemyCars[i].move();
       
-
-      if(enemyCars[i].y + enemyCars[i].height/1.5> containerHeight){
+      if(enemyCars[i].y + enemyCars[i].height / 1.5 > containerHeight){
         this.removeOpponentCar(enemyCars[i]);
         this.updateScore();
       }
+   }
+  }
+
+  this.checkCollisionWithAmmoBox = function() {
+    for(var i = 0; i < ammoBoxes.length; i++) {
+      if(playerCar.checkCollisionWithCar(ammoBoxes[i])){
+        playerAmmo+=2 ;
+        this.ammuElement.innerHTML = 'Ammo Left: ' + playerAmmo;
+        this.removeAmmoBox(ammoBoxes[i]);
+        continue;
+      }
+      
+      ammoBoxes[i].setSpeed(0, carSpeed);
+      ammoBoxes[i].move();
+      
+      if(ammoBoxes[i].y + ammoBoxes[i].height / 1.5 > containerHeight){
+        this.removeAmmoBox(ammoBoxes[i]);
+      }
+   }
+  }
+
+  this.checkHitWithAmmo = function() {
+    for(var i = 0; i < enemyCars.length; i++) {
+      if(ammoElement.checkCollisionWithCar(enemyCars[i])) {
+        this.removeOpponentCar(enemyCars[i]);
+        this.removeAmmo(ammoElement);
+        this.updateScore();
+      }
     }
+
+  }
+
+  this.moveAmmo = function() {
+    if(ammos.length >0) {
+      for(var i = 0; i < ammos.length; i++) {
+        ammoElement = ammos[i];
+        ammos[i].setSpeed(0, -carSpeed*2);
+        ammos[i].move();
+        this.checkHitWithAmmo();
+      }
+    }
+  }
+
+  this.moveCars = function() {
+    gameSpeed += 15; 
+    roadElement.style.backgroundPositionY = (gameSpeed % (containerHeight)) + 'px';
+    
+    if(gameSpeed > this.refreshRate*10) {
+      carSpeed = 0;
+      gameSpeed -= 15;
+    }
+    else if(gameSpeed % containerHeight/3 === 0 || enemyCars.length < 2) {
+      this.initEnemyCar();
+    }
+    else if(gameSpeed % containerHeight/5 === 0 || ammoBoxes.length < 1){
+      this.initAmmoBox();
+    }
+    carSpeed+=0.025;
+
+    this.checkCollisionWithEnemyCar();
+    this.checkCollisionWithAmmoBox();
+    this.moveAmmo();
   }
 
   this.updateScore = function() {
@@ -359,6 +477,16 @@ function Game(parentElement, maxWidth, maxHeight) {
   this.removeOpponentCar = function(enemyCar) {
     enemyCars.splice(enemyCars.indexOf(enemyCar), 1);
     enemyCar.removeCar();
+  }
+
+  this.removeAmmo = function(ammu) {
+    ammos.splice(ammos.indexOf(ammu), 1);
+    ammu.removeCar();
+  }
+
+  this.removeAmmoBox = function(ammoBox) {
+    ammoBoxes.splice(ammoBoxes.indexOf(ammoBox), 1);
+    ammoBox.removeCar();
   }
 
   this.endScreenInit = function() {
@@ -398,17 +526,17 @@ function Game(parentElement, maxWidth, maxHeight) {
     yourScore.style.color = 'white';
     yourScore.innerHTML = 'Your Score:   ' + this.gameScore;
     
-    highestScore = localStorage.getItem('highestscore');
+
     highScore.style.display = 'block';
-    highScore.innerHTML = 'Highest Score:  ' + highestScore;
+    
     highScore.style.color = 'white';
 
-    if((localStorage.getItem('highestscore') !== null) && (localStorage.getItem('highestscore') < this.gameScore)){
+   
+    if((highestScore < this.gameScore)){
       localStorage.setItem('highestscore', this.gameScore);
     }
-    else {
-      localStorage.setItem('highestscore', highestScore);
-    }
+    highestScore = localStorage.getItem('highestscore');
+    highScore.innerHTML = 'Highest Score:  ' + highestScore;
 
     restartBtn.innerHTML = 'RESTART GAME!';
     restartBtn.style.display = 'inline-block';
@@ -423,18 +551,21 @@ function Game(parentElement, maxWidth, maxHeight) {
       that.parentElement.removeChild(endMenu);
       that.resetVariables();
       that.removeEvents();
-      that.startScreen();
+      that.init();
+      that.startGame();
     };
   }
 
   this.endScreen = function() {
-    this.init();
     this.endScreenInit();
   }
 
   this.resetVariables = function() {
     if(!this.gameState) {
       enemyCars = [];
+      ammoBoxes = [];
+      ammos = [];
+      playerAmmo = 0;
       containerWidth = maxWidth || 600;
       containerHeight = maxHeight || 800;
       roadElement = null;
