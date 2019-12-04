@@ -317,7 +317,7 @@ Game.prototype.gameAnimation;
 Game.prototype.FPS = 60;
 
 var game;
-// var game2; 
+var game2; 
 
 var images = {};
 var sounds = {};
@@ -351,12 +351,12 @@ window.onload = function() {
   }
 
   var game1 = this.document.getElementById('flappy-bird-game');
-  // var game2Id = this.document.getElementById('flappy-bird-game2');
+  var game2Id = this.document.getElementById('flappy-bird-game2');
   var start = function() {
     game = new Game(game1);
-    // game2 = new Game(game2Id);
+    game2 = new Game(game2Id);
     game.startScreen();
-    // game2.startScreen();
+    game2.startScreen();
   }
 
   loadImages(sprites, function(imgs) {
