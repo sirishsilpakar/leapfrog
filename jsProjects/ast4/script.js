@@ -2,7 +2,7 @@ function getRandomNumber(min, max) {
   return Math.random() * (max - min) + min;
 }
 
-function Object(parentElement) {
+function GameObject(parentElement) {
   this.x = 0;
   this.y = 0;
   this.dx = 5;
@@ -12,6 +12,7 @@ function Object(parentElement) {
   this.lanePosition = 0; // 0 for center lane, -1 for left lane, 1 for right lane;
   this.element = null;
   this.parentElement = parentElement;
+  this.images = {};
   
   this.init = function() {
     var gameElement = document.createElement('div');
@@ -23,8 +24,42 @@ function Object(parentElement) {
     this.element = gameElement;
 
     this.draw();
-
+    this.loadImage();
     return this;
+  }
+  
+  this.loadImage = function() {
+    var sources = {
+      astonMartin: './images/aston-martin-one.png',
+      policeCar: './images/police-car.png',
+      blackCar: './images/black-car.png',
+      fordMustang: './images/ford-mustang.png',
+      redCar: './images/red-top-car.png',
+      ammoBox: './images/ammu-box.png',
+      bullet: './images/laser-bullet.png',
+      roadBg: './images/road_bg.png'
+    }
+
+    loadImages = function(sources, callback) {
+      var numberOfImages = 0;
+      var loaded = 0;
+      var imgs = {};
+      for(var i in sources) {
+        numberOfImages++;
+        imgs[i] = new Image();
+        imgs[i].src = sources[i];
+        imgs[i].onload = function() {
+          loaded++;
+          if(loaded === numberOfImages){
+            callback(imgs);
+          }
+        }
+      }
+    }
+
+    loadImages(sources, function(imgs){
+      this.images = imgs;
+    });
   }
 
   this.playerCarInit = function() {
@@ -281,7 +316,7 @@ function Game(parentElement, maxWidth, maxHeight) {
   }
   
   this.initPlayerCar = function() {
-    var car = new Object(this.parentElement).init();
+    var car = new GameObject(this.parentElement).init();
     car.setPositionXY(containerWidth / 1.75 - car.width, containerHeight - car.height * 2.5); //formula what to center car no matter what? container width / container height
                                                                                           /// number of lanes affect it?
     car.setSize(50, 120);
@@ -292,7 +327,7 @@ function Game(parentElement, maxWidth, maxHeight) {
   }
 
   this.initEnemyCar = function() {
-    var enemyCar = new Object(parentElement).init();
+    var enemyCar = new GameObject(parentElement).init();
     enemyCar.lanePosition = parseInt(getRandomNumber(-2,2));
     // enemyCar.setPositionXY((containerWidth / 1.75 - enemyCar.width) + (enemyCar.lanePosition * (containerWidth / 3)), 
     //                           getRandomNumber(-playerCar.height * 1.5, -playerCar.height * 6));
@@ -310,7 +345,7 @@ function Game(parentElement, maxWidth, maxHeight) {
   }
 
   this.fireAmmo = function() {
-    var ammo = new Object(parentElement).init();
+    var ammo = new GameObject(parentElement).init();
     ammo.lanePosition = playerCar.lanePosition;
     ammo.setPositionXY(playerCar.x, playerCar.y + 15);
     ammo.setSize(50, 50);
@@ -328,7 +363,7 @@ function Game(parentElement, maxWidth, maxHeight) {
   }
 
   this.initAmmoBox = function() {
-    var ammoBox = new Object(parentElement).init();
+    var ammoBox = new GameObject(parentElement).init();
     ammoBox.lanePosition = parseInt(getRandomNumber(-2,2));
     // ammoBox.setPositionXY((containerWidth / 1.75 - ammoBox.width) + (ammoBox.lanePosition * (containerWidth / 3)), 
     //                           getRandomNumber(-playerCar.height * 1.5, -playerCar.height * 6));
