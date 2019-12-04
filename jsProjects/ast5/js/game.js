@@ -80,21 +80,59 @@ function Game() {
   this.foregroundx = 0;
   this.score = 0;
   this.highScore = localStorage.getItem('highscore') || 0;
+
+  this.state = {
+    currentState: 0,
+    startMenu: 0,
+    gamePlay: 1,
+    gameOver: 2
+  }
+
   var that = this;
 
+  this.startGamePlay = function() {
+    this.state.currentState = this.state.gamePlay;
+
+    game.start();
+    game.update();
+    game.display();
+  }
+
   this.keyPressed = function(e) {
-    if(e.key === ' '){
+    if(e.key === ' ' && that.state.currentState === that.state.gamePlay){
       that.bird.flap();
+    }
+    else if (e.key === ' ' && that.state.currentState === that.state.startMenu) {
+      that.startGamePlay();
     }
    }
   
   this.mouseClicked = function(e) {
-    if(e.button === 0) {
+    if(e.button === 0 && that.state.currentState === that.state.gamePlay) {
       that.bird.flap();
+    }
+    else if (e.button=== 0 && that.state.currentState === that.state.startMenu){
+      that.startGamePlay();
     }
   } 
 }
 
+Game.prototype.startScreen = function() {
+
+  this.addEvents();
+
+  this.ctx.clearRect(0, 0, this.width, this.height);
+ 
+  this.displayBackground();
+
+  this.displayForegroundBase();
+
+  this.ctx.drawImage(images.startScreen, this.width/4, this.height/4, this.width/2, this.height/2);
+
+  this.ctx.fillStyle = 'white';
+  this.ctx.font = 'bold 15px sans-serif'
+	this.ctx.fillText('Press "SPACEBAR" or "Left-Mouse Button" to fly', this.width/9, this.height/6);
+}
 
 Game.prototype.start = function() {
   this.interval = 0;
@@ -102,19 +140,16 @@ Game.prototype.start = function() {
   this.pipes = [];
   this.bird = new Bird();
   this.animation = true;
-  this.addEvents();
 }
 
 Game.prototype.updateScore = function() {
   this.score+=0.5;
 }
 
-
 Game.prototype.gameOver = function() {
-  game = new Game();
-  game.start();
-  game.update();
-  game.display();
+  this.state.currentState = this.state.gameOver;
+
+
 }
 
 Game.prototype.update = function() {
@@ -174,15 +209,15 @@ Game.prototype.update = function() {
   
 }
 
-
-Game.prototype.display = function() {
-  this.ctx.clearRect(0, 0, this.width, this.height);
+Game.prototype.displayBackground = function() {
  
   var bgFill = this.ctx.createPattern(images.background, 'repeat');
   this.ctx.fillStyle = bgFill;
   this.ctx.fillRect(0, 0, this.width, this.height);
-  
-	for(var i in this.pipes){
+}
+
+Game.prototype.displayForegroundPipes = function() {
+  for(var i in this.pipes){
 		if(i%2 == 0){
 			this.ctx.drawImage(images.pipetop, this.pipes[i].x, this.pipes[i].y + this.pipes[i].height - images.pipetop.height, this.pipes[i].width, images.pipetop.height);
     } 
@@ -190,12 +225,25 @@ Game.prototype.display = function() {
 			this.ctx.drawImage(images.pipebottom, this.pipes[i].x, this.pipes[i].y, this.pipes[i].width, images.pipetop.height);
 		}
   }
+}
 
+Game.prototype.displayForegroundBase = function() {
   for(var i = 0; i < Math.ceil(this.width/ images.base.width) + 1; i++) {
     this.ctx.drawImage(images.base, i * images.base.width - Math.floor(this.foregroundx % images.base.width), this.height - images.base.height/2);
   }
+}
 
+Game.prototype.displayForeground = function() {
+  this.displayForegroundPipes();
+  this.displayForegroundBase();
+}
 
+Game.prototype.display = function() {
+  this.ctx.clearRect(0, 0, this.width, this.height);
+ 
+  this.displayBackground();
+  this.displayForeground();
+  
   if(this.bird.alive){
     // this.ctx.save(); 
     // this.ctx.translate(this.bird.x + this.bird.width/2, this.bird.y + this.bird.height/2);
@@ -254,14 +302,14 @@ window.onload = function() {
     background: './assets/images/background.png',
     pipetop: './assets/images/pipetop.png',
     pipebottom: './assets/images/pipebottom.png',
-    base: './assets/images/base.png'
+    base: './assets/images/base.png',
+    startScreen: './assets/images/message.png',
+    gameOver: './assets/images/gameover.png'
   }
 
   var start = function() {
     game = new Game();
-    game.start();
-    game.update();
-    game.display();
+    game.startScreen();
   }
 
   loadImages(sprites, function(imgs) {
