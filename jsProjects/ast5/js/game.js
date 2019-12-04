@@ -92,7 +92,6 @@ function Game() {
 
   this.startGamePlay = function() {
     this.state.currentState = this.state.gamePlay;
-
     game.start();
     game.update();
     game.display();
@@ -102,7 +101,7 @@ function Game() {
     if(e.key === ' ' && that.state.currentState === that.state.gamePlay){
       that.bird.flap();
     }
-    else if (e.key === ' ' && that.state.currentState === that.state.startMenu) {
+    else if (e.key === ' ' && ((that.state.currentState === that.state.startMenu) || (that.state.currentState === that.state.gameOver))) {
       that.startGamePlay();
     }
    }
@@ -111,27 +110,26 @@ function Game() {
     if(e.button === 0 && that.state.currentState === that.state.gamePlay) {
       that.bird.flap();
     }
-    else if (e.button=== 0 && that.state.currentState === that.state.startMenu){
+    else if (e.button=== 0 && ((that.state.currentState === that.state.startMenu) || (that.state.currentState === that.state.gameOver))){
       that.startGamePlay();
     }
   } 
 }
 
-Game.prototype.startScreen = function() {
-
-  this.addEvents();
-
-  this.ctx.clearRect(0, 0, this.width, this.height);
- 
-  this.displayBackground();
-
-  this.displayForegroundBase();
-
-  this.ctx.drawImage(images.startScreen, this.width/4, this.height/4, this.width/2, this.height/2);
-
+Game.prototype.displayControlInfo= function(width, height) {
   this.ctx.fillStyle = 'white';
   this.ctx.font = 'bold 15px sans-serif'
-	this.ctx.fillText('Press "SPACEBAR" or "Left-Mouse Button" to fly', this.width/9, this.height/6);
+	this.ctx.fillText('Press "SPACEBAR" or "Left-Mouse Button" to fly', width, height);
+}
+
+Game.prototype.startScreen = function() {
+  this.addEvents();
+
+  this.ctx.clearRect(0, 0, this.width, this.height); 
+  this.displayBackground();
+  this.displayForegroundBase();
+  this.ctx.drawImage(images.startScreen, this.width/4, this.height/4, this.width/2, this.height/2);
+  this.displayControlInfo(this.width/9, this.height/6);
 }
 
 Game.prototype.start = function() {
@@ -148,8 +146,18 @@ Game.prototype.updateScore = function() {
 
 Game.prototype.gameOver = function() {
   this.state.currentState = this.state.gameOver;
+  clearTimeout(gameAnimation);
+  this.ctx.drawImage(images.gameOver, this.width/3, this.height/4, images.gameOver.width, images.gameOver.height);
 
+  this.ctx.fillStyle = 'white';
+  this.ctx.font = 'bold 25px sans-serif';
+  this.ctx.fillText('Your Score: ' + this.score, this.width/3, this.height/2);
+  
+  this.highScore = localStorage.getItem('highscore') > this.score ? localStorage.getItem('highscore'):this.score;
+  this.ctx.fillText('High Score: ' + this.highScore, this.width/3, this.height/1.80);
+  localStorage.setItem('highscore', this.highScore);
 
+  this.displayControlInfo(this.width/9, this.height/9)
 }
 
 Game.prototype.update = function() {
@@ -203,14 +211,13 @@ Game.prototype.update = function() {
 
 	var that = this;
 
-  setTimeout(function(){
+  gameAnimation = setTimeout(function(){
     that.update();
   }, 1000/FPS); 
   
 }
 
 Game.prototype.displayBackground = function() {
- 
   var bgFill = this.ctx.createPattern(images.background, 'repeat');
   this.ctx.fillStyle = bgFill;
   this.ctx.fillRect(0, 0, this.width, this.height);
@@ -257,7 +264,7 @@ Game.prototype.display = function() {
 	this.ctx.fillText(this.score, this.width/2, this.height/5);
 
 
-  if(!this.animation){ return;}
+  if(!this.animation){ this.gameOver();}
 
 	var that = this;
 	requestAnimationFrame(function(){
@@ -271,10 +278,10 @@ Game.prototype.flapBird = function() {
 
 Game.prototype.addEvents = function() {
   document.addEventListener('keydown', this.keyPressed);
-  document.addEventListener('mousedown', this.mouseClicked);
+  this.canvas.addEventListener('mousedown', this.mouseClicked);
 }
 
-
+var gameAnimation;
 var game; 
 var FPS = 60;
 var images = {};
