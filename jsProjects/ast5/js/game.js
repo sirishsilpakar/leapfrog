@@ -1,14 +1,13 @@
 function Bird(){
   this.x = 80;
   this.y = 250;
-  this.width = 30;
-  this.height = 20;
+  this.width = 40;
+  this.height = 30;
 
-  this.alive = true;
   this.gravity = 0.7;
   this.velocity = 0;
   this.lift = -15;
-
+  this.alive = true;
 }
 
 Bird.prototype.flap = function() {
@@ -31,16 +30,14 @@ Bird.prototype.collisionWithPipe = function(height, pipe){
 	if(this.y >= height || this.y + this.height <= 0){
 		return true;
 	}
-
-		if(!(
-			this.x > pipe.x + pipe.width ||
-			this.x + this.width < pipe.x || 
-			this.y > pipe.y + pipe.height ||
-			this.y + this.height < pipe.y
-			)){
-			return true;
-	  }
-  
+  if(!(
+    this.x > pipe.x + pipe.width ||
+    this.x + this.width < pipe.x || 
+    this.y > pipe.y + pipe.height ||
+    this.y + this.height < pipe.y
+    )){
+    return true;
+  }
 }
 
 function Pipe(x, y, width, height) {
@@ -49,7 +46,6 @@ function Pipe(x, y, width, height) {
   this.width = width || 50;
   this.height= height || 50;
   this.speed = 3;
-
 }
 
 Pipe.prototype.update = function(){
@@ -62,20 +58,17 @@ Pipe.prototype.leftView = function(){
 
 Pipe.prototype.leftBird = false;
 
-function Game() {
-  this.pipes = [];
-  this.bird;
-  this.canvas = document.getElementById('flappy-bird-game');
+function Game(canvas) {
+  this.canvas = canvas;
   this.ctx = this.canvas.getContext('2d');
   this.width = this.canvas.width;
   this.height = this.canvas.height;
+  this.pipes = [];
+  this.bird;
   this.animation = true;
-
   this.spawnInterval = 90;
   this.interval = 0;
-
   this.checkBirdOverPipe = false;
-
   this.foregroundSpeed = 3;
   this.foregroundx = 0;
   this.score = 0;
@@ -92,14 +85,14 @@ function Game() {
 
   this.startGamePlay = function() {
     this.state.currentState = this.state.gamePlay;
-    game.start();
-    game.update();
-    game.display();
+    this.start();
+    this.update();
+    this.display();
   }
 
   this.keyPressed = function(e) {
     if(e.key === ' ' && that.state.currentState === that.state.gamePlay){
-      that.bird.flap();
+      that.flapBird();
     }
     else if (e.key === ' ' && ((that.state.currentState === that.state.startMenu) || (that.state.currentState === that.state.gameOver))) {
       that.startGamePlay();
@@ -108,12 +101,19 @@ function Game() {
   
   this.mouseClicked = function(e) {
     if(e.button === 0 && that.state.currentState === that.state.gamePlay) {
-      that.bird.flap();
+      that.flapBird()
     }
-    else if (e.button=== 0 && ((that.state.currentState === that.state.startMenu) || (that.state.currentState === that.state.gameOver))){
+    else if (e.button === 0 && ((that.state.currentState === that.state.startMenu) || (that.state.currentState === that.state.gameOver))){
       that.startGamePlay();
     }
-  } 
+  }
+  this.displayBird = function() {
+    // this.ctx.save(); 
+    // this.ctx.translate(this.bird.x + this.bird.width/2, this.bird.y + this.bird.height/2);
+    // this.ctx.rotate(Math.PI/2 * this.gravity/2);
+    this.ctx.drawImage(images.bird, this.bird.x, this.bird.y, this.bird.width, this.bird.height);
+    // this.ctx.restore();
+  }    
 }
 
 Game.prototype.displayControlInfo= function(width, height) {
@@ -124,12 +124,15 @@ Game.prototype.displayControlInfo= function(width, height) {
 
 Game.prototype.startScreen = function() {
   this.addEvents();
+  this.loadSounds();
+  this.start();
 
   this.ctx.clearRect(0, 0, this.width, this.height); 
   this.displayBackground();
   this.displayForegroundBase();
   this.ctx.drawImage(images.startScreen, this.width/4, this.height/4, this.width/2, this.height/2);
   this.displayControlInfo(this.width/9, this.height/6);
+  this.displayBird();
 }
 
 Game.prototype.start = function() {
@@ -142,11 +145,14 @@ Game.prototype.start = function() {
 
 Game.prototype.updateScore = function() {
   this.score+=0.5;
+  sounds.point.play();
+  
 }
 
 Game.prototype.gameOver = function() {
   this.state.currentState = this.state.gameOver;
-  clearTimeout(gameAnimation);
+  // sounds.gameover.play(); //sound does not stop;
+  clearTimeout(this.gameAnimation);
   this.ctx.drawImage(images.gameOver, this.width/3, this.height/4, images.gameOver.width, images.gameOver.height);
 
   this.ctx.fillStyle = 'white';
@@ -157,7 +163,7 @@ Game.prototype.gameOver = function() {
   this.ctx.fillText('High Score: ' + this.highScore, this.width/3, this.height/1.80);
   localStorage.setItem('highscore', this.highScore);
 
-  this.displayControlInfo(this.width/9, this.height/9)
+  this.displayControlInfo(this.width/9, this.height/9);
 }
 
 Game.prototype.update = function() {
@@ -182,6 +188,7 @@ Game.prototype.update = function() {
     if (this.bird.collisionWithPipe(this.height, this.pipes[i])){
       this.animation = false;
       this.alive = false;
+      sounds.collision.play();
     }
 
     if (((this.pipes[i].x + this.pipes[i].width/2) < this.bird.x) && (!this.pipes[i].leftBird)){
@@ -211,9 +218,9 @@ Game.prototype.update = function() {
 
 	var that = this;
 
-  gameAnimation = setTimeout(function(){
+  this.gameAnimation = setTimeout(function(){
     that.update();
-  }, 1000/FPS); 
+  }, 1000/this.FPS); 
   
 }
 
@@ -245,6 +252,34 @@ Game.prototype.displayForeground = function() {
   this.displayForegroundBase();
 }
 
+
+
+Game.prototype.loadSounds = function() {
+  sounds = {
+    collision: './assets/audio/hit.ogg',
+    flapping: './assets/audio/wing.ogg',
+    gameover: './assets/audio/die.ogg',
+    point: './assets/audio/point.ogg'
+  }
+
+  var audioElement =[];
+  for(var keys in sounds) {
+    audioElement.push(new Audio(sounds[keys]));
+  }
+  var i = 0;
+  for(var keys in sounds) {
+    sounds[keys] = audioElement[i];
+    sounds[keys].volume = 0.2;
+    i++;
+  }
+  // audioElement.forEach(function(element) {
+  //   for(var keys in sounds) {
+  //     sounds[keys] = element;
+  //     sounds[keys].volume = 0.2;
+  //   }
+  // });
+}
+
 Game.prototype.display = function() {
   this.ctx.clearRect(0, 0, this.width, this.height);
  
@@ -252,11 +287,7 @@ Game.prototype.display = function() {
   this.displayForeground();
   
   if(this.bird.alive){
-    // this.ctx.save(); 
-    // this.ctx.translate(this.bird.x + this.bird.width/2, this.bird.y + this.bird.height/2);
-    // this.ctx.rotate(Math.PI/2 * this.gravity/2);
-    this.ctx.drawImage(images.bird, this.bird.x, this.bird.y, this.bird.width, this.bird.height);
-    // this.ctx.restore();
+   this.displayBird();
 	}
 
   this.ctx.fillStyle = 'white';
@@ -274,17 +305,22 @@ Game.prototype.display = function() {
 
 Game.prototype.flapBird = function() {
   this.bird.flap();
+  sounds.flapping.play();
 }
 
 Game.prototype.addEvents = function() {
-  document.addEventListener('keydown', this.keyPressed);
+  this.canvas.addEventListener('keydown', this.keyPressed);
   this.canvas.addEventListener('mousedown', this.mouseClicked);
 }
 
-var gameAnimation;
-var game; 
-var FPS = 60;
+Game.prototype.gameAnimation;
+Game.prototype.FPS = 60;
+
+var game;
+// var game2; 
+
 var images = {};
+var sounds = {};
 
 var loadImages = function(sources, callback) {
   var numberOfImages = 0;
@@ -314,9 +350,13 @@ window.onload = function() {
     gameOver: './assets/images/gameover.png'
   }
 
+  var game1 = this.document.getElementById('flappy-bird-game');
+  // var game2Id = this.document.getElementById('flappy-bird-game2');
   var start = function() {
-    game = new Game();
+    game = new Game(game1);
+    // game2 = new Game(game2Id);
     game.startScreen();
+    // game2.startScreen();
   }
 
   loadImages(sprites, function(imgs) {
